@@ -47,7 +47,21 @@ router.route('/cats/:cat_id')
       if(err) {
         res.send(err);
       }
-      res.json(cats);
+      res.json(cat);
+    });
+  })
+  .put(function(req, res) {
+    Cat.findById(req.params.cat_id, function(err, cat) {
+      if(err) {
+        res.send(err);
+      }
+      cat.name = req.body.name;
+      cat.save(function (err) {
+        if(err) {
+          res.send(err);
+        }
+        res.json({message: 'cat updated successfully.'});
+      });
     });
   });
 
